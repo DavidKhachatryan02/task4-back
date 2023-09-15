@@ -1,7 +1,7 @@
 const Joi = require("joi");
-const { InvalidBody } = require("../../errors/validation");
+const { InvalidBody } = require("../../../errors/validation");
 
-const RegisterSchema = Joi.object({
+const registerSchema = Joi.object({
   email: Joi.string().email().required(),
   name: Joi.string().required(),
   password: Joi.string().required(),
@@ -10,7 +10,7 @@ const RegisterSchema = Joi.object({
 
 const RegisterValidation = (req, res, next) => {
   try {
-    const { error } = RegisterSchema.validate(req.body);
+    const { error } = registerSchema.validate(req.body);
 
     if (error) {
       return next(new InvalidBody(error));

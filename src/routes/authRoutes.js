@@ -1,15 +1,22 @@
 const express = require("express");
 const authController = require("../controllers/auth.controller");
-const { LoginValidation } = require("../middlewares/auth/LoginValidation");
+const {
+  LoginValidation,
+} = require("../middlewares/auth/bodyValidations/LoginValidation");
+const {
+  AddRoleValidation,
+} = require("../middlewares/auth/bodyValidations/AddRoleValidation");
+const {
+  RefreshValidation,
+} = require("../middlewares/auth/bodyValidations/RefreshValidation");
+const {
+  RegisterValidation,
+} = require("../middlewares/auth/bodyValidations/RegisterValidation");
 const { isUserAuthorized } = require("../middlewares/auth/isUserAuthorized");
-const { RefreshValidation } = require("../middlewares/auth/RefreshValidation");
 const { isUserExists } = require("../middlewares/auth/isUserExists");
 const { isValidToken } = require("../middlewares/auth/isValidToken");
 const { isUserRegistered } = require("../middlewares/auth/isUserRegistered");
-const { addRoleValidation } = require("../middlewares/auth/addRoleValidation");
-const {
-  RegisterValidation,
-} = require("../middlewares/auth/RegisterValidation");
+
 const { isUserHaveRole } = require("../middlewares/auth/isUserHaveRole");
 
 const authRouter = express.Router();
@@ -36,7 +43,7 @@ authRouter.post("/logout", authController.logout);
 
 authRouter.post(
   "/addRoleToUser",
-  addRoleValidation,
+  AddRoleValidation,
   isUserHaveRole,
   authController.addRoleToUser
 );

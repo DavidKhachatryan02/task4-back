@@ -1,14 +1,14 @@
 const Joi = require("joi");
-const { InvalidBody } = require("../../errors/validation");
+const { InvalidBody } = require("../../../errors/validation");
 
-const LoginSchema = Joi.object({
+const loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
 });
 
 const LoginValidation = (req, res, next) => {
   try {
-    const { error } = LoginSchema.validate(req.body);
+    const { error } = loginSchema.validate(req.body);
 
     if (error) {
       return next(new InvalidBody(error));

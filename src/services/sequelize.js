@@ -5,6 +5,9 @@ const { DB_URL } = require("../constants/env");
 const UserModel = require("../models/users.model");
 const RoleModel = require("../models/roles.model");
 const UsersOnRolesModel = require("../models/users_on_roles.model");
+const CardModel = require("../models/card.model");
+const ProductImgModel = require("../models/product_Images.model");
+const ProductModel = require("../models/product.model");
 
 const config = {
   logging: false,
@@ -15,9 +18,13 @@ const config = {
 const sequelize = new Sequelize(DB_URL, config);
 
 // Model initiations
+
 const User = UserModel(sequelize);
 const Role = RoleModel(sequelize);
 const UsersOnRoles = UsersOnRolesModel(sequelize);
+const Card = CardModel(sequelize);
+const Products = ProductModel(sequelize);
+const ProductImg = ProductImgModel(sequelize);
 
 // Model associations
 
@@ -31,10 +38,16 @@ Role.belongsToMany(User, {
   foreignKey: "roleId",
 });
 
+Products.hasMany(ProductImg, { as: "imgUrl", foreignKey: "productId" });
+ProductImg.belongsTo(Products, { foreignKey: "productId" });
+
 module.exports = {
   User,
   Role,
   UsersOnRoles,
+  Card,
+  Products,
+  ProductImg,
 };
 
 module.exports = sequelize;

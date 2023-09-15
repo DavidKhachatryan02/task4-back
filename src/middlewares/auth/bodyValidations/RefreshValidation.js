@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { InvalidBody } = require("../../errors/validation");
+const { InvalidBody } = require("../../../errors/validation");
 
 const refreshSchema = Joi.object({
   refreshToken: Joi.string().required(),
