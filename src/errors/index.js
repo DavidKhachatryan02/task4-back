@@ -9,7 +9,11 @@ const {
   UserHaveRole,
   IsNotCustomer,
 } = require("./auth");
-const { ProductNotFound, ImgAlreadyAdded } = require("./products");
+const {
+  ProductNotFound,
+  ImgAlreadyAdded,
+  ImgNotExists,
+} = require("./products");
 const InvalidBody = require("./validation");
 
 const errorHandler = (error, req, res, next) => {
@@ -19,6 +23,9 @@ const errorHandler = (error, req, res, next) => {
         res.status(400).json({ message: error.message });
         break;
       case ImgAlreadyAdded:
+        res.status(400).json({ message: error.message });
+        break;
+      case ImgNotExists:
         res.status(400).json({ message: error.message });
         break;
       case IsNotCustomer:

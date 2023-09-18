@@ -12,14 +12,18 @@ const {
 const {
   AddToCardValidation,
 } = require("../middlewares/products/bodyValidations/AddToCardValidation");
+const {
+  AddImgValidation,
+} = require("../middlewares/products/bodyValidations/AddImgValidation");
+const {
+  RemoveImgValidation,
+} = require("../middlewares/products/bodyValidations/RemoveImgValidation");
 
 const { isUserAdmin } = require("../middlewares/products/isUserAdmin");
 const { isUserCustomer } = require("../middlewares/products/isUserCustomer");
 const { isUserAuthorized } = require("../middlewares/auth/isUserAuthorized");
-const {
-  AddImgValidation,
-} = require("../middlewares/products/bodyValidations/AddImgValidation");
 const { isImgAdded } = require("../middlewares/products/isImgAdded");
+const { isImgExists } = require("../middlewares/products/isImgExists");
 
 const productsRouter = express.Router();
 
@@ -58,8 +62,8 @@ productsRouter.post(
 
 productsRouter.post(
   "/removeImg",
-  AddImgValidation, //! IMG ID OR ULR?
-  // isImgAdded, //! add validation and isImgExists middlewares
+  RemoveImgValidation,
+  isImgExists,
   isUserAuthorized,
   isUserAdmin,
   productsController.removeImg

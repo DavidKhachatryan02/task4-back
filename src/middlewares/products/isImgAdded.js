@@ -9,8 +9,6 @@ const isImgAdded = async (req, res, next) => {
       where: { productId, imgUrl },
     });
 
-    console.log(imgAdded);
-
     if (imgAdded) {
       return next(new ImgAlreadyAdded());
     }

@@ -75,6 +75,18 @@ const addImg = async (req, res, next) => {
 
 const removeImg = async (req, res, next) => {
   try {
+    const id = req.body.imgId;
+    const { productId } = req.body;
+
+    await models.product_Images.destroy({
+      where: {
+        id,
+        productId,
+      },
+    });
+    res
+      .status(201)
+      .send(`img ${id} is deleted from product with ID-${productId} `);
     // res.status(201).send(`img ${imgUrl} added to product ${productId}`);
     next(null);
   } catch (e) {
@@ -114,7 +126,10 @@ const getAllProducts = async (req, res, next) => {
       name: item.name,
       price: item.price,
       description: item.description,
-      imgUrl: item.imgUrl.map((img) => img.imgUrl),
+      img: item.imgUrl.map((img) => ({
+        imgUrl: img.imgUrl,
+        imgId: img.id,
+      })),
     }));
 
     res.status(201).json(formedProducts);
@@ -142,8 +157,12 @@ const getProductInfo = async (req, res, next) => {
       return next(new ProductNotFound());
     }
 
-    product.dataValues.imgUrl = product.imgUrl.map((item) => item.imgUrl);
+    product.dataValues.img = product.imgUrl.map((item) => ({
+      imgUrl: item.imgUrl,
+      imgId: item.id,
+    }));
 
+    delete product.dataValues.imgUrl;
     res.status(201).json(product.dataValues);
     next(null);
   } catch (e) {

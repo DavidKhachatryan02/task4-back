@@ -10,4 +10,10 @@ class ImgAlreadyAdded extends Error {
   }
 }
 
-module.exports = { ProductNotFound, ImgAlreadyAdded };
+class ImgNotExists extends Error {
+  constructor() {
+    super("Image not Exists");
+  }
+}
+
+module.exports = { ProductNotFound, ImgAlreadyAdded, ImgNotExists };
