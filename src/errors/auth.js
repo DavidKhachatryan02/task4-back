@@ -33,6 +33,13 @@ class UnAuthorizedError extends Error {
     super("No auth token provided");
   }
 }
+
+class IsNotAdmin extends Error {
+  constructor() {
+    super("You are not Admin, Dont have permisson");
+  }
+}
+
 class InvalidRefreshToken extends Error {
   constructor() {
     super("Refresh token is invalid");
@@ -41,6 +48,7 @@ class InvalidRefreshToken extends Error {
 
 module.exports = {
   UserHaveRole,
+  IsNotAdmin,
   UserExists,
   NoSuchRole,
   InvalidRefreshToken,

@@ -28,15 +28,38 @@ const ProductImg = ProductImgModel(sequelize);
 
 // Model associations
 
+// User.belongsToMany(Role, {
+//   through: UsersOnRoles,
+//   foreignKey: "userId",
+// });
+
+// Role.belongsToMany(User, {
+//   through: UsersOnRoles,
+//   foreignKey: "roleId",
+// });
+
+// User.hasMany(UsersOnRoles);
+// UsersOnRoles.hasMany(User);
+
 User.belongsToMany(Role, {
   through: UsersOnRoles,
   foreignKey: "userId",
+  // otherKey: "roleId",
 });
 
 Role.belongsToMany(User, {
   through: UsersOnRoles,
   foreignKey: "roleId",
+  // otherKey: "userId",
 });
+
+// User.hasMany(UsersOnRoles, {
+//   foreignKey: "userId",
+// });
+
+// UsersOnRoles.belongsTo(User, {
+//   foreignKey: "userId",
+// });
 
 Products.hasMany(ProductImg, { as: "imgUrl", foreignKey: "productId" });
 ProductImg.belongsTo(Products, { foreignKey: "productId" });

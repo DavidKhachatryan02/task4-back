@@ -1,22 +1,25 @@
 const ROLES = require("../../constants/roles");
-const { UnAuthorizedError, UserNotExists } = require("../../errors/auth");
+const { IsNotAdmin, UserNotExists } = require("../../errors/auth");
 const { models } = require("../../services/sequelize");
 
 const isUserAdmin = async (req, res, next) => {
   try {
     const email = req.user.data;
-    const user = await models.users.findOne({ where: { email } });
+    const user = await models.users.findOne({
+      where: { email },
+      include: {
+        model: models.roles,
+      },
+    });
+
     if (!user) {
       return next(new UserNotExists(email));
     }
-    const userId = user.dataValues.id;
-    const userIsAdmin = await models.users_on_roles.findOne({
-      where: { userId, roleId: ROLES.ADMIN.id },
-    });
 
-    if (!userIsAdmin) {
-      //! WRITE ERROR
-      return next(new UnAuthorizedError(error));
+    const userRoles = user.roles.map((role) => role.id);
+
+    if (!userRoles.includes(ROLES.ADMIN.id)) {
+      return next(new IsNotAdmin());
     }
 
     next();
@@ -24,8 +27,7 @@ const isUserAdmin = async (req, res, next) => {
     console.error(
       `[middleware]: Error on isUserAdmin middleware error => ${e}`
     );
-
-    next(new UnAuthorizedError());
+    next(e);
   }
 };
 

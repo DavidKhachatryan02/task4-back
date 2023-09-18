@@ -20,28 +20,21 @@ const getMe = async (req, res, next) => {
 
     const userWithTokens = await models.users.findOne({
       where: { email },
+      include: {
+        model: models.roles,
+      },
     });
 
     if (!userWithTokens.dataValues.accessToken) {
       return next(new UnAuthorizedError());
     }
 
-    const { refreshToken, accessToken, password, ...user } =
+    const userRoles = userWithTokens.roles.map((role) => role.name);
+
+    const { refreshToken, accessToken, password, roles, ...user } =
       userWithTokens.dataValues;
 
-    const userRoleIds = await models.users_on_roles.findAll({
-      where: { userId: user.id },
-    });
-
-    const userRoles = [];
-
-    for (const userRoleId of userRoleIds) {
-      const { roleId } = userRoleId.dataValues;
-      const userRole = await models.roles.findOne({ where: { id: roleId } });
-      userRoles.push(userRole.dataValues.name);
-    }
-
-    user.roles = userRoles.join(",");
+    user.roles = userRoles;
 
     res.status(200).json(user);
 

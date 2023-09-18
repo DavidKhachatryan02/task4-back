@@ -24,7 +24,7 @@ const editProduct = async (req, res, next) => {
       },
     });
 
-    // if(!product){
+    // if(!product){ //!WRITE ERROR HERE
     //   return next(new Product Not foun ERROR)
     // }
 

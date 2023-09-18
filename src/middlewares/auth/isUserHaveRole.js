@@ -6,14 +6,19 @@ const isUserHaveRole = async (req, res, next) => {
   try {
     const { email, role } = req.body;
     const roleId = ROLES[await role.toUpperCase()].id;
-    const user = await models.users.findOne({ where: { email } });
-
-    const userHaveRole = await models.users_on_roles.findOne({
-      where: { userId: user.dataValues.id, roleId },
+    const user = await models.users.findOne({
+      where: { email },
+      include: {
+        model: models.roles,
+      },
     });
 
-    if (userHaveRole) {
-      return next(new UserHaveRole(email, role));
+    const userRoles = user.roles.map((role) => role.id);
+
+    if (userRoles.includes(roleId)) {
+      return next(
+        new UserHaveRole(email, ROLES[await role.toUpperCase()].name)
+      );
     }
 
     req.user = user;

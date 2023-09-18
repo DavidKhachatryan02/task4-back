@@ -5,6 +5,7 @@ const {
   InvalidRefreshToken,
   UserExists,
   NoSuchRole,
+  IsNotAdmin,
   UserHaveRole,
 } = require("./auth");
 const InvalidBody = require("./validation");
@@ -28,6 +29,9 @@ const errorHandler = (error, req, res, next) => {
         res.status(400).json({ message: error.message });
         break;
       case UnAuthorizedError:
+        res.status(401).json({ message: error.message });
+        break;
+      case IsNotAdmin:
         res.status(401).json({ message: error.message });
         break;
       case InvalidCredentialsError:
