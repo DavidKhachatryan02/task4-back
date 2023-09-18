@@ -41,6 +41,8 @@ Role.belongsToMany(User, {
 Products.hasMany(ProductImg, { as: "imgUrl", foreignKey: "productId" });
 ProductImg.belongsTo(Products, { foreignKey: "productId" });
 
+
+
 module.exports = {
   User,
   Role,

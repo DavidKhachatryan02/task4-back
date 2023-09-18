@@ -9,9 +9,16 @@ const {
 const {
   EditProductValidation,
 } = require("../middlewares/products/bodyValidations/EditProductValidation");
+const {
+  AddToCardValidation,
+} = require("../middlewares/products/bodyValidations/AddToCardValidation");
 
 const { isUserAdmin } = require("../middlewares/products/isUserAdmin");
+const { isUserCustomer } = require("../middlewares/products/isUserCustomer");
 const { isUserAuthorized } = require("../middlewares/auth/isUserAuthorized");
+const {
+  AddImgValidation,
+} = require("../middlewares/products/bodyValidations/AddImgValidation");
 
 const productsRouter = express.Router();
 
@@ -39,16 +46,48 @@ productsRouter.post(
   productsController.deleteProduct
 );
 
-productsRouter.post("/addToCard", productsController.addToCard);
+productsRouter.post(
+  "/addImg",
+  AddImgValidation,
+  isUserAuthorized,
+  isUserAdmin,
+  productsController.addImg
+);
 
-productsRouter.post("/removeProduct", productsController.removeProduct);
+productsRouter.get(
+  "/getAllProducts",
+  isUserAuthorized,
+  productsController.getAllProducts
+);
 
-productsRouter.post("/addImg", productsController.addImg);
+productsRouter.get(
+  "/getProductInfo",
+  isUserAuthorized,
+  productsController.getProductInfo
+);
 
-productsRouter.get("/getAllProducts", productsController.getAllProducts);
+//! DONE TILL HERE
 
-productsRouter.get("/getProductInfo", productsController.getProductInfo);
+productsRouter.post(
+  "/addToCard",
+  AddToCardValidation,
+  isUserAuthorized,
+  isUserCustomer,
+  productsController.addToCard
+);
 
-productsRouter.get("/getUserCard", productsController.getUserCard);
+productsRouter.post(
+  "/removeProductFromCard",
+  isUserAuthorized,
+  isUserCustomer,
+  productsController.removeProductFromCard
+);
+
+productsRouter.get(
+  "/getUserCard",
+  isUserAuthorized,
+  isUserCustomer,
+  productsController.getUserCard
+);
 
 module.exports = productsRouter;

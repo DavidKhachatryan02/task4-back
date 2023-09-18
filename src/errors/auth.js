@@ -40,6 +40,12 @@ class IsNotAdmin extends Error {
   }
 }
 
+class IsNotCustomer extends Error {
+  constructor() {
+    super("You are not Customer, you cant add to card");
+  }
+}
+
 class InvalidRefreshToken extends Error {
   constructor() {
     super("Refresh token is invalid");
@@ -55,4 +61,5 @@ module.exports = {
   UnAuthorizedError,
   InvalidCredentialsError,
   UserNotExists,
+  IsNotCustomer,
 };

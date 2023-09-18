@@ -7,12 +7,20 @@ const {
   NoSuchRole,
   IsNotAdmin,
   UserHaveRole,
+  IsNotCustomer,
 } = require("./auth");
+const ProductNotFound = require("./products");
 const InvalidBody = require("./validation");
 
 const errorHandler = (error, req, res, next) => {
   if (error) {
     switch (error.constructor) {
+      case ProductNotFound:
+        res.status(400).json({ message: error.message });
+        break;
+      case IsNotCustomer:
+        res.status(400).json({ message: error.message });
+        break;
       case UserHaveRole:
         res.status(400).json({ message: error.message });
         break;
