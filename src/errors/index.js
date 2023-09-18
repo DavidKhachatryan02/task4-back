@@ -9,13 +9,16 @@ const {
   UserHaveRole,
   IsNotCustomer,
 } = require("./auth");
-const ProductNotFound = require("./products");
+const { ProductNotFound, ImgAlreadyAdded } = require("./products");
 const InvalidBody = require("./validation");
 
 const errorHandler = (error, req, res, next) => {
   if (error) {
     switch (error.constructor) {
       case ProductNotFound:
+        res.status(400).json({ message: error.message });
+        break;
+      case ImgAlreadyAdded:
         res.status(400).json({ message: error.message });
         break;
       case IsNotCustomer:

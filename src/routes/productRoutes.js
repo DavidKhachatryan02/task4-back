@@ -19,6 +19,7 @@ const { isUserAuthorized } = require("../middlewares/auth/isUserAuthorized");
 const {
   AddImgValidation,
 } = require("../middlewares/products/bodyValidations/AddImgValidation");
+const { isImgAdded } = require("../middlewares/products/isImgAdded");
 
 const productsRouter = express.Router();
 
@@ -49,9 +50,19 @@ productsRouter.post(
 productsRouter.post(
   "/addImg",
   AddImgValidation,
+  isImgAdded,
   isUserAuthorized,
   isUserAdmin,
   productsController.addImg
+);
+
+productsRouter.post(
+  "/removeImg",
+  AddImgValidation, //! IMG ID OR ULR?
+  // isImgAdded, //! add validation and isImgExists middlewares
+  isUserAuthorized,
+  isUserAdmin,
+  productsController.removeImg
 );
 
 productsRouter.get(

@@ -73,6 +73,15 @@ const addImg = async (req, res, next) => {
   }
 };
 
+const removeImg = async (req, res, next) => {
+  try {
+    // res.status(201).send(`img ${imgUrl} added to product ${productId}`);
+    next(null);
+  } catch (e) {
+    next(e);
+  }
+};
+
 const addToCard = async (req, res, next) => {
   try {
     next(null);
@@ -152,6 +161,7 @@ const getUserCard = async (req, res, next) => {
 
 module.exports = {
   addProduct,
+  removeImg,
   editProduct,
   deleteProduct,
   addToCard,

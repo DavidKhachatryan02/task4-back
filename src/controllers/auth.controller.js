@@ -74,7 +74,7 @@ const register = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ refreshToken, accessToken, expireTime: JWT_EXPIRE_TIME });
+      .json({ refreshToken, accessToken, ExpireTime: JWT_EXPIRE_TIME });
     next(null);
   } catch (e) {
     next(e);
@@ -98,7 +98,7 @@ const login = async (req, res, next) => {
     res.status(200).json({
       accessToken,
       refreshToken: req.user.refreshToken,
-      ExpiteTime: JWT_EXPIRE_TIME,
+      ExpireTime: JWT_EXPIRE_TIME,
     });
 
     next(null);
@@ -122,7 +122,7 @@ const refreshToken = async (req, res, next) => {
     res.status(200).json({
       refreshToken,
       accessToken: newAccessToken,
-      expireTime: JWT_EXPIRE_TIME,
+      ExpireTime: JWT_EXPIRE_TIME,
     });
 
     next(null);
@@ -147,7 +147,6 @@ const logout = async (req, res, next) => {
 const addRoleToUser = async (req, res, next) => {
   try {
     const { role, email } = req.body;
-    console.log(req.user, req.roleId);
 
     const roleId = ROLES[await role.toUpperCase()].id;
 
