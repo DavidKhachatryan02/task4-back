@@ -81,8 +81,6 @@ productsRouter.get(
   productsController.getProductInfo
 );
 
-//! DONE TILL HERE
-
 productsRouter.post(
   "/addToCard",
   AddToCardValidation,

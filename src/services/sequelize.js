@@ -32,36 +32,20 @@ User.belongsToMany(Role, {
   through: UsersOnRoles,
   foreignKey: "userId",
 });
-
 Role.belongsToMany(User, {
   through: UsersOnRoles,
   foreignKey: "roleId",
 });
 
+
 Products.hasMany(ProductImg, { as: "imgUrl", foreignKey: "productId" });
 ProductImg.belongsTo(Products, { foreignKey: "productId" });
 
-// User.belongsToMany(Products, { through: Card });
-// Products.belongsToMany(User, { through: Card });
 
-// User.hasMany(Card);
-// Card.belongsTo(User);
-
-Card.belongsTo(Products, {
-  foreignKey: "productId",
-});
-
-Card.belongsTo(User, {
-  foreignKey: "userId",
-});
-
-Products.hasMany(Card, {
-  foreignKey: "productId",
-});
-
-User.hasMany(Card, {
-  foreignKey: "userId",
-});
+Card.belongsTo(Products, { foreignKey: "productId" });
+Card.belongsTo(User, { foreignKey: "userId" });
+Products.hasMany(Card, { foreignKey: "productId" });
+User.hasMany(Card, { foreignKey: "userId" });
 
 module.exports = {
   User,
