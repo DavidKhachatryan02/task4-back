@@ -3,7 +3,6 @@ const { InvalidBody } = require("../../../errors/validation");
 
 const addToCardSchema = Joi.object({
   productId: Joi.number().required(),
-  userId: Joi.number().required(),
 });
 
 const AddToCardValidation = (req, res, next) => {

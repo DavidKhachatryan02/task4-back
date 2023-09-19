@@ -6,11 +6,7 @@ const {
   generateRefreshToken,
   verifyAuthToken,
 } = require("../utils");
-const {
-  InvalidCredentialsError,
-  UnAuthorizedError,
-  NoSuchRole,
-} = require("../errors/auth");
+const { InvalidCredentialsError, NoSuchRole } = require("../errors/auth");
 
 const { models } = require("../services/sequelize");
 
@@ -18,21 +14,17 @@ const getMe = async (req, res, next) => {
   try {
     const email = req.user.data;
 
-    const userWithTokens = await models.users.findOne({
+    const userData = await models.users.findOne({
       where: { email },
+      attributes: { exclude: ["password", "refreshToken", "accessToken"] },
       include: {
         model: models.roles,
       },
     });
 
-    if (!userWithTokens.dataValues.accessToken) {
-      return next(new UnAuthorizedError());
-    }
+    const userRoles = userData.roles.map((role) => role.name);
 
-    const userRoles = userWithTokens.roles.map((role) => role.name);
-
-    const { refreshToken, accessToken, password, roles, ...user } =
-      userWithTokens.dataValues;
+    const { roles, ...user } = userData.dataValues;
 
     user.roles = userRoles;
 

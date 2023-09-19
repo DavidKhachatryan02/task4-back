@@ -8,7 +8,7 @@ const isValidToken = async (req, res, next) => {
     const user = await models.User.findOne({ where: { refreshToken } });
 
     if (accessToken !== user.accessToken) {
-      return next(new Error("Invalid access token"));
+      return next(new InvalidAccessToken());
     }
 
     if (refreshToken !== user.refreshToken) {

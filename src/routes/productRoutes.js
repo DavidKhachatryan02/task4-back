@@ -93,6 +93,7 @@ productsRouter.post(
 
 productsRouter.post(
   "/removeProductFromCard",
+  AddToCardValidation,
   isUserAuthorized,
   isUserCustomer,
   productsController.removeProductFromCard

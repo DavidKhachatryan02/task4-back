@@ -52,8 +52,15 @@ class InvalidRefreshToken extends Error {
   }
 }
 
+class InvalidAccessToken extends Error {
+  constructor() {
+    super("Access Token token is invalid");
+  }
+}
+
 module.exports = {
   UserHaveRole,
+  InvalidAccessToken,
   IsNotAdmin,
   UserExists,
   NoSuchRole,

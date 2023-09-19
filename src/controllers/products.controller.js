@@ -37,7 +37,7 @@ const editProduct = async (req, res, next) => {
 
     await product.save();
 
-    res.status(201).json(product);
+    res.status(200).json(product);
     next(null);
   } catch (e) {
     next(e);
@@ -52,7 +52,7 @@ const deleteProduct = async (req, res, next) => {
         id,
       },
     });
-    res.status(201).send(`product with ID-${id} is deleted`);
+    res.status(200).send(`product with ID-${id} is deleted`);
     next(null);
   } catch (e) {
     next(e);
@@ -66,7 +66,7 @@ const addImg = async (req, res, next) => {
       productId,
       imgUrl,
     });
-    res.status(201).send(`img ${imgUrl} added to product ${productId}`);
+    res.status(200).send(`img ${imgUrl} added to product ${productId}`);
     next(null);
   } catch (e) {
     next(e);
@@ -85,25 +85,8 @@ const removeImg = async (req, res, next) => {
       },
     });
     res
-      .status(201)
+      .status(200)
       .send(`img ${id} is deleted from product with ID-${productId} `);
-    // res.status(201).send(`img ${imgUrl} added to product ${productId}`);
-    next(null);
-  } catch (e) {
-    next(e);
-  }
-};
-
-const addToCard = async (req, res, next) => {
-  try {
-    next(null);
-  } catch (e) {
-    next(e);
-  }
-};
-
-const removeProductFromCard = async (req, res, next) => {
-  try {
     next(null);
   } catch (e) {
     next(e);
@@ -132,7 +115,7 @@ const getAllProducts = async (req, res, next) => {
       })),
     }));
 
-    res.status(201).json(formedProducts);
+    res.status(200).json(formedProducts);
     next(null);
   } catch (e) {
     next(e);
@@ -163,7 +146,27 @@ const getProductInfo = async (req, res, next) => {
     }));
 
     delete product.dataValues.imgUrl;
-    res.status(201).json(product.dataValues);
+    res.status(200).json(product.dataValues);
+    next(null);
+  } catch (e) {
+    next(e);
+  }
+};
+
+const addToCard = async (req, res, next) => {
+  try {
+    const { productId } = req.body;
+
+    const email = req.user.data;
+
+    const { id } = await models.users.findOne({ where: { email } });
+
+    const addedProduct = await models.card.create({
+      userId: id,
+      productId,
+    });
+    res.status(200).json(addedProduct);
+
     next(null);
   } catch (e) {
     next(e);
@@ -172,6 +175,49 @@ const getProductInfo = async (req, res, next) => {
 
 const getUserCard = async (req, res, next) => {
   try {
+    const email = req.user.data;
+
+    const { id } = await models.users.findOne({ where: { email } });
+
+    const userCard = await models.card.findAll({
+      where: { userId: id },
+      include: {
+        model: models.products,
+        include: {
+          model: models.product_Images,
+          as: "imgUrl",
+        },
+      },
+    });
+
+    const product = userCard.map((item) => ({
+      productId: item.product.id,
+      name: item.product.name,
+      price: item.product.price,
+      description: item.product.description,
+      imgUrl: item.product.imgUrl.map((img) => img.imgUrl),
+    }));
+
+    res.status(200).json(product);
+    next(null);
+  } catch (e) {
+    next(e);
+  }
+};
+
+const removeProductFromCard = async (req, res, next) => {
+  try {
+    const email = req.user.data;
+    const { productId } = req.body;
+
+    const { id } = await models.users.findOne({ where: { email } });
+
+    const productToDelete = await models.card.findOne({
+      where: { userId: id, productId },
+    });
+
+    await productToDelete.destroy({ force: true });
+    res.status(200).send("DONE");
     next(null);
   } catch (e) {
     next(e);
