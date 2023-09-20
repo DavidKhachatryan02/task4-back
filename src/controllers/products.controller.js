@@ -161,10 +161,14 @@ const addToCard = async (req, res, next) => {
 
     const { id } = await models.users.findOne({ where: { email } });
 
-    const addedProduct = await models.card.create({
-      userId: id,
-      productId,
+    const [addedProduct, created] = await models.card.findOrCreate({
+      where: { userId: id, productId },
     });
+
+    if (!created) {
+      await addedProduct.increment("quantity");
+    }
+
     res.status(200).json(addedProduct);
 
     next(null);
@@ -191,6 +195,7 @@ const getUserCard = async (req, res, next) => {
     });
 
     const product = userCard.map((item) => ({
+      quantity: item.quantity,
       productId: item.product.id,
       name: item.product.name,
       price: item.product.price,
@@ -216,8 +221,13 @@ const removeProductFromCard = async (req, res, next) => {
       where: { userId: id, productId },
     });
 
-    await productToDelete.destroy({ force: true });
-    res.status(200).send("DONE");
+    if (productToDelete.quantity != 1) {
+      await productToDelete.decrement({ quantity: 1 });
+      res.status(200).send("quantity decremeted");
+    } else {
+      await productToDelete.destroy({ force: true });
+      res.status(200).send("Product deleted from card");
+    }
     next(null);
   } catch (e) {
     next(e);
