@@ -7,26 +7,26 @@ const app = express();
 app.use(express.json());
 app.use("/auth", router);
 
-const data = {
-  user1: {
-    email: "testUser@test.com",
-    name: "TestUserName",
-    password: "TestPassword1",
-    userRole: "admin",
-  },
+const testUserData = {
+  email: "testUser@test.com",
+  name: "TestUserName",
+  password: "TestPassword1",
+  userRole: "admin",
 };
 
 describe("Auth API Routes", () => {
   it("should register a user", async () => {
-    const response = await request(app).post("/auth/register").send(data.user1);
+    const response = await request(app)
+      .post("/auth/register")
+      .send(testUserData);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expect.objectContaining({}));
   });
 
   it("should login a user", async () => {
     const response = await request(app).post("/auth/login").send({
-      email: data.user1.email,
-      password: data.user1.password,
+      email: testUserData.email,
+      password: testUserData.password,
     });
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expect.objectContaining({}));
@@ -34,8 +34,8 @@ describe("Auth API Routes", () => {
 
   it("should refresh a token", async () => {
     const userData = await request(app).post("/auth/login").send({
-      email: data.user1.email,
-      password: data.user1.password,
+      email: testUserData.email,
+      password: testUserData.password,
     });
     const response = await request(app).post("/auth/refreshToken").send({
       accessToken: userData.body.accessToken,
@@ -51,7 +51,7 @@ describe("Auth API Routes", () => {
   it("should get user information", async () => {
     const userTokens = await request(app)
       .post("/auth/login")
-      .send({ email: data.user1.email, password: data.user1.password });
+      .send({ email: testUserData.email, password: testUserData.password });
     const { accessToken } = userTokens.body;
     const response = await request(app)
       .get("/auth/getMe")
@@ -63,10 +63,10 @@ describe("Auth API Routes", () => {
   it("should delete User", async () => {
     const response = await request(app)
       .post("/auth/deleteUser")
-      .send({ email: data.user1.email });
+      .send({ email: testUserData.email });
     expect(response.status).toBe(200);
     expect(response.text).toBe(
-      `Role with email ${data.user1.email} is deleted`
+      `Role with email ${testUserData.email} is deleted`
     );
   });
 });
