@@ -25,6 +25,8 @@ authRouter.get("/getMe", isUserAuthorized, authController.getMe);
 
 authRouter.post("/login", LoginValidation, isUserExists, authController.login);
 
+authRouter.post("/deleteUser", authController.deleteUser);
+
 authRouter.post(
   "/register",
   RegisterValidation,

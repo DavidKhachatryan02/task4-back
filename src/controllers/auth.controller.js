@@ -166,7 +166,26 @@ const addRoleToUser = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    await models.users.destroy({
+      where: {
+        email,
+      },
+      force: true,
+    });
+    res.status(200).send(`Role with email ${email} is deleted`);
+
+    next(null);
+  } catch (e) {
+    console.error(`deleteUser error ${e}`);
+    next(e);
+  }
+};
+
 module.exports = {
+  deleteUser,
   getMe,
   login,
   refreshToken,

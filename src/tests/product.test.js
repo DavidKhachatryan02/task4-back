@@ -1,11 +1,11 @@
 const express = require("express");
 const request = require("supertest");
-const router = require("../routes/authRoutes");
+const router = require("../routes/productRoutes");
 
 const app = express();
 
 app.use(express.json());
-app.use("/auth", router);
+app.use("/products", router);
 
 const data = {
   user1: {
