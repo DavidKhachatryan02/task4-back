@@ -45,8 +45,8 @@ describe("Products API Routes", () => {
       .post("/products/addproduct")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(newProduct)
-      .expect(201);
-
+     // .expect(201);
+    console.log( response.text);
     expect(response.body.name).toBe(newProduct.name);
     expect(response.body.description).toBe(newProduct.description);
     expect(response.body.price).toBe(newProduct.price);

@@ -18,17 +18,18 @@ describe("Auth API Routes", () => {
   it("should register a user", async () => {
     const response = await request(app)
       .post("/auth/register")
-      .send(testUserData);
-    expect(response.status).toBe(200);
+      .send(testUserData).expect(200);
     expect(response.body).toEqual(expect.objectContaining({}));
   });
 
   it("should login a user", async () => {
-    const response = await request(app).post("/auth/login").send({
-      email: testUserData.email,
-      password: testUserData.password,
-    });
-    expect(response.status).toBe(200);
+    const response = await request(app)
+      .post("/auth/login")
+      .send({
+        email: testUserData.email,
+        password: testUserData.password,
+      })
+      .expect(200);
     expect(response.body).toEqual(expect.objectContaining({}));
   });
 
@@ -37,11 +38,13 @@ describe("Auth API Routes", () => {
       email: testUserData.email,
       password: testUserData.password,
     });
-    const response = await request(app).post("/auth/refreshToken").send({
-      accessToken: userData.body.accessToken,
-      refreshToken: userData.body.refreshToken,
-    });
-    expect(response.status).toBe(200);
+    const response = await request(app)
+      .post("/auth/refreshToken")
+      .send({
+        accessToken: userData.body.accessToken,
+        refreshToken: userData.body.refreshToken,
+      })
+      .expect(200);
     expect(response.body).toMatchObject({
       accessToken: expect.any(String),
       refreshToken: expect.any(String),
@@ -55,16 +58,16 @@ describe("Auth API Routes", () => {
     const { accessToken } = userTokens.body;
     const response = await request(app)
       .get("/auth/getMe")
-      .set("Authorization", `Bearer ${accessToken}`);
-    expect(response.status).toBe(200);
+      .set("Authorization", `Bearer ${accessToken}`)
+      .expect(200);
     expect(response.body).toEqual(expect.objectContaining({}));
   });
 
   it("should delete User", async () => {
     const response = await request(app)
       .post("/auth/deleteUser")
-      .send({ email: testUserData.email });
-    expect(response.status).toBe(200);
+      .send({ email: testUserData.email })
+      .expect(200);
     expect(response.text).toBe(
       `Role with email ${testUserData.email} is deleted`
     );
