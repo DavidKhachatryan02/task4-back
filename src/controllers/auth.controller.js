@@ -32,6 +32,8 @@ const getMe = async (req, res, next) => {
 
     next(null);
   } catch (e) {
+    console.error(`[auth controller]: getMe error => ${e}`);
+
     next(e);
   }
 };
@@ -69,6 +71,7 @@ const register = async (req, res, next) => {
       .json({ refreshToken, accessToken, ExpireTime: JWT_EXPIRE_TIME });
     next(null);
   } catch (e) {
+    console.error(`[auth controller]: register error => ${e}`);
     next(e);
   }
 };
@@ -95,7 +98,7 @@ const login = async (req, res, next) => {
 
     next(null);
   } catch (e) {
-    console.error(`login error ${e}`);
+    console.error(`[auth controller]: login error => ${e}`);
     next(e);
   }
 };
@@ -119,7 +122,7 @@ const refreshToken = async (req, res, next) => {
 
     next(null);
   } catch (e) {
-    console.error(`Registration error ${e}`);
+    console.error(`[auth controller]: refreshToken error => ${e}`);
     next(e);
   }
 };
@@ -132,6 +135,7 @@ const logout = async (req, res, next) => {
     res.status(200).end();
     next(null);
   } catch (e) {
+    console.error(`[auth controller]: logout error => ${e}`);
     next(e);
   }
 };
@@ -161,7 +165,7 @@ const addRoleToUser = async (req, res, next) => {
 
     next(null);
   } catch (e) {
-    console.error(`addRole error ${e}`);
+    console.error(`[auth controller]: addRoleToUser error => ${e}`);
     next(e);
   }
 };
@@ -179,7 +183,7 @@ const deleteUser = async (req, res, next) => {
 
     next(null);
   } catch (e) {
-    console.error(`deleteUser error ${e}`);
+    console.error(`[auth controller]: deleteUser error => ${e}`);
     next(e);
   }
 };

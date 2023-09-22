@@ -14,6 +14,9 @@ const testUserData = {
   userRole: "admin",
 };
 
+let accessToken;
+let refreshToken;
+
 describe("Auth API Routes", () => {
   it("should register a user", async () => {
     const response = await request(app)
@@ -21,6 +24,8 @@ describe("Auth API Routes", () => {
       .send(testUserData)
       .expect(200);
     expect(response.body).toEqual(expect.objectContaining({}));
+    accessToken = response.body.accessToken;
+    refreshToken = response.body.refreshToken;
   });
 
   it("should login a user", async () => {
@@ -35,33 +40,36 @@ describe("Auth API Routes", () => {
   });
 
   it("should refresh a token", async () => {
-    const userData = await request(app).post("/auth/login").send({
-      email: testUserData.email,
-      password: testUserData.password,
-    });
     const response = await request(app)
       .post("/auth/refreshToken")
-      .send({
-        accessToken: userData.body.accessToken,
-        refreshToken: userData.body.refreshToken,
-      })
+      .send({ accessToken, refreshToken })
       .expect(200);
     expect(response.body).toMatchObject({
       accessToken: expect.any(String),
       refreshToken: expect.any(String),
     });
+    accessToken = response.body.accessToken;
   });
 
   it("should get user information", async () => {
-    const userTokens = await request(app)
-      .post("/auth/login")
-      .send({ email: testUserData.email, password: testUserData.password });
-    const { accessToken } = userTokens.body;
     const response = await request(app)
       .get("/auth/getMe")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200);
     expect(response.body).toEqual(expect.objectContaining({}));
+    const allowedRoles = ["Admin", "Customer", "User"];
+    const userRoles = response.body.roles;
+
+    expect(userRoles).toContainEqual(
+      expect.stringMatching(new RegExp(allowedRoles.join("|"), "i"))
+    );
+  });
+
+  it("should logout user", async () => {
+    await request(app)
+      .post("/auth/logout")
+      .set("Authorization", `Bearer ${accessToken}`)
+      .expect(200);
   });
 
   it("should delete User", async () => {

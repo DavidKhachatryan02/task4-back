@@ -12,6 +12,7 @@ const addProduct = async (req, res, next) => {
     res.status(201).json(newProduct);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: addProduct error => ${e}`);
     next(e);
   }
 };
@@ -40,6 +41,8 @@ const editProduct = async (req, res, next) => {
     res.status(200).json(product);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: editProduct error => ${e}`);
+
     next(e);
   }
 };
@@ -55,6 +58,7 @@ const deleteProduct = async (req, res, next) => {
     res.status(200).send(`product with ID-${id} is deleted`);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: deleteProduct error => ${e}`);
     next(e);
   }
 };
@@ -69,6 +73,7 @@ const addImg = async (req, res, next) => {
     res.status(200).send(`img ${imgUrl} added to product ${productId}`);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: addImg error => ${e}`);
     next(e);
   }
 };
@@ -89,6 +94,7 @@ const removeImg = async (req, res, next) => {
       .send(`img ${id} is deleted from product with ID-${productId} `);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: removeImg error => ${e}`);
     next(e);
   }
 };
@@ -118,6 +124,7 @@ const getAllProducts = async (req, res, next) => {
     res.status(200).json(formedProducts);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: getAllProducts error => ${e}`);
     next(e);
   }
 };
@@ -149,6 +156,7 @@ const getProductInfo = async (req, res, next) => {
     res.status(200).json(product.dataValues);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: getProductInfo error => ${e}`);
     next(e);
   }
 };
@@ -173,6 +181,7 @@ const addToCard = async (req, res, next) => {
 
     next(null);
   } catch (e) {
+    console.error(`[products controller]: addToCard error => ${e}`);
     next(e);
   }
 };
@@ -206,6 +215,7 @@ const getUserCard = async (req, res, next) => {
     res.status(200).json(product);
     next(null);
   } catch (e) {
+    console.error(`[products controller]: getUserCard error => ${e}`);
     next(e);
   }
 };
@@ -230,6 +240,7 @@ const removeProductFromCard = async (req, res, next) => {
     }
     next(null);
   } catch (e) {
+    console.error(`[products controller]: removeProductFromCard error => ${e}`);
     next(e);
   }
 };

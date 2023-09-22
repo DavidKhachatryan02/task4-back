@@ -33,7 +33,7 @@ const errorHandler = (error, req, res, next) => {
         res.status(404).json({ message: error.message });
         break;
       case IsNotCustomer:
-        res.status(400).json({ message: error.message });
+        res.status(403).json({ message: error.message });
         break;
       case UserHaveRole:
         res.status(400).json({ message: error.message });
@@ -54,7 +54,7 @@ const errorHandler = (error, req, res, next) => {
         res.status(401).json({ message: error.message });
         break;
       case IsNotAdmin:
-        res.status(401).json({ message: error.message });
+        res.status(403).json({ message: error.message });
         break;
       case InvalidCredentialsError:
         res.status(403).json({ message: error.message });
