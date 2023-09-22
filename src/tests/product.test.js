@@ -67,7 +67,7 @@ describe("Products API Routes", () => {
     expect(response.body.price).toBe(newProduct.price);
   });
 
-  it("should Edit product ", async () => {
+  it("should Edit product info", async () => {
     productToEdit = {
       productId,
       name: "Edited Name",

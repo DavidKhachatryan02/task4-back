@@ -232,7 +232,7 @@ const removeProductFromCard = async (req, res, next) => {
     });
 
     if (productToDelete.quantity != 1) {
-      await productToDelete.decrement({ quantity: 1 });
+      await productToDelete.decrement("quantity");
       res.status(200).send("quantity decremeted");
     } else {
       await productToDelete.destroy({ force: true });

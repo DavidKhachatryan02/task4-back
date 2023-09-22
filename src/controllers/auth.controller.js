@@ -82,7 +82,9 @@ const login = async (req, res, next) => {
 
     const userPassword = req.body.password;
 
-    if (await compare(password, userPassword)) {
+    const isPasswordValid = await compare(userPassword, password);
+
+    if (!isPasswordValid) {
       return next(new InvalidCredentialsError());
     }
 

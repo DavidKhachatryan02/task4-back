@@ -1,4 +1,7 @@
-const { InvalidRefreshToken } = require("../../errors/auth");
+const {
+  InvalidRefreshToken,
+  InvalidAccessToken,
+} = require("../../errors/auth");
 const { models } = require("../../services/sequelize");
 
 const isValidToken = async (req, res, next) => {
