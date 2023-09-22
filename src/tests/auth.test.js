@@ -18,7 +18,8 @@ describe("Auth API Routes", () => {
   it("should register a user", async () => {
     const response = await request(app)
       .post("/auth/register")
-      .send(testUserData).expect(200);
+      .send(testUserData)
+      .expect(200);
     expect(response.body).toEqual(expect.objectContaining({}));
   });
 
@@ -69,7 +70,7 @@ describe("Auth API Routes", () => {
       .send({ email: testUserData.email })
       .expect(200);
     expect(response.text).toBe(
-      `Role with email ${testUserData.email} is deleted`
+      `User with email ${testUserData.email} is deleted`
     );
   });
 });

@@ -175,7 +175,7 @@ const deleteUser = async (req, res, next) => {
       },
       force: true,
     });
-    res.status(200).send(`Role with email ${email} is deleted`);
+    res.status(200).send(`User with email ${email} is deleted`);
 
     next(null);
   } catch (e) {

@@ -21,7 +21,7 @@ const errorHandler = (error, req, res, next) => {
   if (error) {
     switch (error.constructor) {
       case ProductNotFound:
-        res.status(400).json({ message: error.message });
+        res.status(404).json({ message: error.message });
         break;
       case InvalidAccessToken:
         res.status(400).json({ message: error.message });
@@ -30,7 +30,7 @@ const errorHandler = (error, req, res, next) => {
         res.status(400).json({ message: error.message });
         break;
       case ImgNotExists:
-        res.status(400).json({ message: error.message });
+        res.status(404).json({ message: error.message });
         break;
       case IsNotCustomer:
         res.status(400).json({ message: error.message });
@@ -45,7 +45,7 @@ const errorHandler = (error, req, res, next) => {
         res.status(400).json({ message: error.message });
         break;
       case UserNotExists:
-        res.status(400).json({ message: error.message });
+        res.status(404).json({ message: error.message });
         break;
       case UserExists:
         res.status(400).json({ message: error.message });

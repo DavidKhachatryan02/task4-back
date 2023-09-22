@@ -40,34 +40,30 @@ describe("Products API Routes", () => {
     await request(app).post("/products/deleteProduct").send(productId);
   });
 
+  it("should return 404 when product ID is invalid", async () => {
+    await request(app).get("/products/invalid-id").expect(404);
+  });
+
   it("should add a new product", async () => {
     const response = await request(app)
-      .post("/products/addproduct")
+      .post("products/addProduct")
       .set("Authorization", `Bearer ${accessToken}`)
-      .send(newProduct)
-     // .expect(201);
-    console.log( response.text);
+      .send(newProduct);
+    // .expect(201);
+    productId = response.body.id;
     expect(response.body.name).toBe(newProduct.name);
     expect(response.body.description).toBe(newProduct.description);
     expect(response.body.price).toBe(newProduct.price);
   });
 
   it("should get product details by ID", async () => {
-    const product = await request(app)
-      .post("/products/addProduct")
-      .set("Authorization", `Bearer ${accessToken}`)
-      .send(newProduct);
-    productId = newProduct.id;
     const response = await request(app)
-      .get(`products/getProductInfo/${product.id}`)
+      .get(`products/getProductInfo/${productId}`)
+      .set("Authorization", `Bearer ${accessToken}`)
       .expect(200);
 
-    expect(response.body.name).toBe(product.name);
-    expect(response.body.description).toBe(product.description);
-    expect(response.body.price).toBe(product.price);
-  });
-
-  it("should return 404 when product ID is invalid", async () => {
-    await request(app).get("/api/products/invalid-id").expect(404);
+    expect(response.body.name).toBe(newProduct.name);
+    expect(response.body.description).toBe(newProduct.description);
+    expect(response.body.price).toBe(newProduct.price);
   });
 });
