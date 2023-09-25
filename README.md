@@ -29,7 +29,5 @@ To run this project, you will need to add the following environment variables to
 
 `DATABASE_URL`= postgres://postgres:example@localhost:5432/task-4-back
 
-`ANOTHER_API_KEY`
-
 
     
