@@ -22,6 +22,7 @@
     "test": "jest",
     "db:seed:create": "sequelize seed:create --name",
     "db:seed:run": "sequelize db:seed:all",
+    "db:seed:drop":"sequelize db:seed:undo:all",
     "db:migrate": "sequelize db:migrate ",
     "db:migrate:down": "sequelize db:migrate:undo ",
     "db:migrate:create": "sequelize migration:create --name"

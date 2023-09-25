@@ -8,6 +8,6 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: example
-      POSTGRES_DB: task-4-back1
+      POSTGRES_DB: task-4-back
     ports:
       - 5432:5432
