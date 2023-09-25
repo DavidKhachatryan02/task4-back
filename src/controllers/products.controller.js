@@ -102,26 +102,17 @@ const removeImg = async (req, res, next) => {
 const getAllProducts = async (req, res, next) => {
   try {
     const products = await models.products.findAll({
+      attributes: ["id", "name", "price", "description"],
       include: [
         {
           model: models.product_Images,
           as: "imgUrl",
+          attributes: ["imgUrl", "id"],
         },
       ],
     });
 
-    const formedProducts = products.map((item) => ({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      description: item.description,
-      img: item.imgUrl.map((img) => ({
-        imgUrl: img.imgUrl,
-        imgId: img.id,
-      })),
-    }));
-
-    res.status(200).json(formedProducts);
+    res.status(200).json(products);
     next(null);
   } catch (e) {
     console.error(`[products controller]: getAllProducts error => ${e}`);
@@ -139,6 +130,7 @@ const getProductInfo = async (req, res, next) => {
         {
           model: models.product_Images,
           as: "imgUrl",
+          attributes: ["id", "imgUrl"],
         },
       ],
     });
@@ -147,13 +139,7 @@ const getProductInfo = async (req, res, next) => {
       return next(new ProductNotFound());
     }
 
-    product.dataValues.img = product.imgUrl.map((item) => ({
-      imgUrl: item.imgUrl,
-      imgId: item.id,
-    }));
-
-    delete product.dataValues.imgUrl;
-    res.status(200).json(product.dataValues);
+    res.status(200).json(product);
     next(null);
   } catch (e) {
     console.error(`[products controller]: getProductInfo error => ${e}`);
@@ -194,25 +180,19 @@ const getUserCard = async (req, res, next) => {
 
     const userCard = await models.card.findAll({
       where: { userId: id },
+      attributes: ["quantity", "productId"],
       include: {
         model: models.products,
+        attributes: ["name", "price", "description"],
         include: {
           model: models.product_Images,
           as: "imgUrl",
+          attributes: ["imgUrl", "id"],
         },
       },
     });
 
-    const product = userCard.map((item) => ({
-      quantity: item.quantity,
-      productId: item.product.id,
-      name: item.product.name,
-      price: item.product.price,
-      description: item.product.description,
-      imgUrl: item.product.imgUrl.map((img) => img.imgUrl),
-    }));
-
-    res.status(200).json(product);
+    res.status(200).json(userCard);
     next(null);
   } catch (e) {
     console.error(`[products controller]: getUserCard error => ${e}`);
