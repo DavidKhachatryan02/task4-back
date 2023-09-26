@@ -1,5 +1,6 @@
 const express = require("express");
 const productsController = require("../controllers/products.controller");
+
 const { isUserAuthorized } = require("../middlewares/auth");
 const {
   AddImgValidation,
@@ -13,6 +14,7 @@ const {
   isUserAdmin,
   isUserCustomer,
 } = require("../middlewares/products");
+
 const productsRouter = express.Router();
 
 productsRouter.post(
