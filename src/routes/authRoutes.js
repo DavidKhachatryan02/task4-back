@@ -1,23 +1,17 @@
 const express = require("express");
 const authController = require("../controllers/auth.controller");
-const {
-  LoginValidation,
-} = require("../middlewares/auth/bodyValidations/LoginValidation");
+
 const {
   AddRoleValidation,
-} = require("../middlewares/auth/bodyValidations/AddRoleValidation");
-const {
+  LoginValidation,
   RefreshValidation,
-} = require("../middlewares/auth/bodyValidations/RefreshValidation");
-const {
   RegisterValidation,
-} = require("../middlewares/auth/bodyValidations/RegisterValidation");
-const { isUserAuthorized } = require("../middlewares/auth/isUserAuthorized");
-const { isUserExists } = require("../middlewares/auth/isUserExists");
-const { isValidToken } = require("../middlewares/auth/isValidToken");
-const { isUserRegistered } = require("../middlewares/auth/isUserRegistered");
-
-const { isUserHaveRole } = require("../middlewares/auth/isUserHaveRole");
+  isUserAuthorized,
+  isUserExists,
+  isUserHaveRole,
+  isUserRegistered,
+  isValidToken,
+} = require("../middlewares/auth");
 
 const authRouter = express.Router();
 

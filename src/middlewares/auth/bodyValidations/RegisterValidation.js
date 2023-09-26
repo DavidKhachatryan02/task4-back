@@ -25,4 +25,4 @@ const RegisterValidation = (req, res, next) => {
   }
 };
 
-module.exports = { RegisterValidation };
+module.exports = RegisterValidation;

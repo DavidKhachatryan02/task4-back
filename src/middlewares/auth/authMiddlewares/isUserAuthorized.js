@@ -1,5 +1,5 @@
-const { UnAuthorizedError } = require("../../errors/auth");
-const { verifyAuthToken } = require("../../utils");
+const { UnAuthorizedError } = require("../../../errors/auth");
+const { verifyAuthToken } = require("../../../utils");
 
 const isUserAuthorized = async (req, res, next) => {
   try {
@@ -27,6 +27,4 @@ const isUserAuthorized = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  isUserAuthorized,
-};
+module.exports = isUserAuthorized;

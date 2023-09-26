@@ -1,6 +1,6 @@
-const { models } = require("../../services/sequelize");
-const ROLES = require("../../constants/roles");
-const { UserHaveRole } = require("../../errors/auth");
+const { models } = require("../../../services/sequelize");
+const ROLES = require("../../../constants/roles");
+const { UserHaveRole } = require("../../../errors/auth");
 
 const isUserHaveRole = async (req, res, next) => {
   try {
@@ -33,6 +33,4 @@ const isUserHaveRole = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  isUserHaveRole,
-};
+module.exports = isUserHaveRole;

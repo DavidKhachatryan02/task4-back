@@ -1,5 +1,5 @@
-const { UserNotExists } = require("../../errors/auth");
-const { models } = require("../../services/sequelize");
+const { UserNotExists } = require("../../../errors/auth");
+const { models } = require("../../../services/sequelize");
 
 const isUserExists = async (req, res, next) => {
   try {
@@ -21,6 +21,4 @@ const isUserExists = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  isUserExists,
-};
+module.exports = isUserExists;

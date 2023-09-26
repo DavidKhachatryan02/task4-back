@@ -1,5 +1,5 @@
-const { ImgNotExists } = require("../../errors/products");
-const { models } = require("../../services/sequelize");
+const { ImgNotExists } = require("../../../errors/products");
+const { models } = require("../../../services/sequelize");
 
 const isImgExists = async (req, res, next) => {
   try {
@@ -21,4 +21,4 @@ const isImgExists = async (req, res, next) => {
   }
 };
 
-module.exports = { isImgExists };
+module.exports = isImgExists;

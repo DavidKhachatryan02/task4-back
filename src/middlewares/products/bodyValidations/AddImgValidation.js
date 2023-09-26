@@ -23,4 +23,4 @@ const AddImgValidation = (req, res, next) => {
   }
 };
 
-module.exports = { AddImgValidation };
+module.exports = AddImgValidation;

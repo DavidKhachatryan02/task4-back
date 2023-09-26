@@ -1,6 +1,6 @@
-const ROLES = require("../../constants/roles");
-const { UserNotExists, IsNotCustomer } = require("../../errors/auth");
-const { models } = require("../../services/sequelize");
+const ROLES = require("../../../constants/roles");
+const { UserNotExists, IsNotCustomer } = require("../../../errors/auth");
+const { models } = require("../../../services/sequelize");
 
 const isUserCustomer = async (req, res, next) => {
   try {
@@ -31,6 +31,4 @@ const isUserCustomer = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  isUserCustomer,
-};
+module.exports = isUserCustomer;

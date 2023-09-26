@@ -25,4 +25,4 @@ const EditProductValidation = (req, res, next) => {
   }
 };
 
-module.exports = { EditProductValidation };
+module.exports = EditProductValidation;

@@ -1,8 +1,8 @@
 const {
   InvalidRefreshToken,
   InvalidAccessToken,
-} = require("../../errors/auth");
-const { models } = require("../../services/sequelize");
+} = require("../../../errors/auth");
+const { models } = require("../../../services/sequelize");
 
 const isValidToken = async (req, res, next) => {
   try {
@@ -29,6 +29,4 @@ const isValidToken = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  isValidToken,
-};
+module.exports = isValidToken;

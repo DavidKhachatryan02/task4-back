@@ -23,4 +23,4 @@ const AddRoleValidation = (req, res, next) => {
   }
 };
 
-module.exports = { AddRoleValidation };
+module.exports = AddRoleValidation;

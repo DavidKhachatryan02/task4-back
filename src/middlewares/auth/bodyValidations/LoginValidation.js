@@ -23,4 +23,4 @@ const LoginValidation = (req, res, next) => {
   }
 };
 
-module.exports = { LoginValidation };
+module.exports = LoginValidation;

@@ -1,30 +1,18 @@
 const express = require("express");
 const productsController = require("../controllers/products.controller");
-const {
-  ProductValidation,
-} = require("../middlewares/products/bodyValidations/ProductValidation");
-const {
-  DeleteItemValidation,
-} = require("../middlewares/products/bodyValidations/DeleteItemValidation");
-const {
-  EditProductValidation,
-} = require("../middlewares/products/bodyValidations/EditProductValidation");
-const {
-  AddToCardValidation,
-} = require("../middlewares/products/bodyValidations/AddToCardValidation");
+const { isUserAuthorized } = require("../middlewares/auth");
 const {
   AddImgValidation,
-} = require("../middlewares/products/bodyValidations/AddImgValidation");
-const {
+  AddToCardValidation,
+  DeleteItemValidation,
+  EditProductValidation,
+  ProductValidation,
   RemoveImgValidation,
-} = require("../middlewares/products/bodyValidations/RemoveImgValidation");
-
-const { isUserAdmin } = require("../middlewares/products/isUserAdmin");
-const { isUserCustomer } = require("../middlewares/products/isUserCustomer");
-const { isUserAuthorized } = require("../middlewares/auth/isUserAuthorized");
-const { isImgAdded } = require("../middlewares/products/isImgAdded");
-const { isImgExists } = require("../middlewares/products/isImgExists");
-
+  isImgAdded,
+  isImgExists,
+  isUserAdmin,
+  isUserCustomer,
+} = require("../middlewares/products");
 const productsRouter = express.Router();
 
 productsRouter.post(

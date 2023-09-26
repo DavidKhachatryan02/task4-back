@@ -37,10 +37,8 @@ Role.belongsToMany(User, {
   foreignKey: "roleId",
 });
 
-
 Products.hasMany(ProductImg, { as: "imgUrl", foreignKey: "productId" });
 ProductImg.belongsTo(Products, { foreignKey: "productId" });
-
 
 Card.belongsTo(Products, { foreignKey: "productId" });
 Card.belongsTo(User, { foreignKey: "userId" });

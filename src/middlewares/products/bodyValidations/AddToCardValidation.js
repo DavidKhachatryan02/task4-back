@@ -22,4 +22,4 @@ const AddToCardValidation = (req, res, next) => {
   }
 };
 
-module.exports = { AddToCardValidation };
+module.exports = AddToCardValidation;

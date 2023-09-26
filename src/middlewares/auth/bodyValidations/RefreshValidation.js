@@ -23,4 +23,4 @@ const RefreshValidation = (req, res, next) => {
   }
 };
 
-module.exports = { RefreshValidation };
+module.exports = RefreshValidation;

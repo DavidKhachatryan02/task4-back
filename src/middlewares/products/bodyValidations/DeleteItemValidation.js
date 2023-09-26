@@ -22,4 +22,4 @@ const DeleteItemValidation = (req, res, next) => {
   }
 };
 
-module.exports = { DeleteItemValidation };
+module.exports = DeleteItemValidation;

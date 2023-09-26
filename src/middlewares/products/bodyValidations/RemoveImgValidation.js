@@ -23,4 +23,4 @@ const RemoveImgValidation = (req, res, next) => {
   }
 };
 
-module.exports = { RemoveImgValidation };
+module.exports = RemoveImgValidation;

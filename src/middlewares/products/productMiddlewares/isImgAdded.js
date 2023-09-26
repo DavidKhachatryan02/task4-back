@@ -1,5 +1,5 @@
-const { ImgAlreadyAdded } = require("../../errors/products");
-const { models } = require("../../services/sequelize");
+const { ImgAlreadyAdded } = require("../../../errors/products");
+const { models } = require("../../../services/sequelize");
 
 const isImgAdded = async (req, res, next) => {
   try {
@@ -19,4 +19,4 @@ const isImgAdded = async (req, res, next) => {
   }
 };
 
-module.exports = { isImgAdded };
+module.exports = isImgAdded;
