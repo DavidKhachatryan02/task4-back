@@ -11,7 +11,7 @@ const AddRoleValidation = (req, res, next) => {
     const { error } = addRoleSchema.validate(req.body);
 
     if (error) {
-      return next(new InvalidBody(error));
+      return next(new InvalidBody(error.message));
     }
 
     next();

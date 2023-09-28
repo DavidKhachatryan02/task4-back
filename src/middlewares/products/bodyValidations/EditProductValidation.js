@@ -13,7 +13,7 @@ const EditProductValidation = (req, res, next) => {
     const { error } = editProduct.validate(req.body);
 
     if (error) {
-      return next(new InvalidBody(error));
+      return next(new InvalidBody(error.message));
     }
 
     next();

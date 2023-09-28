@@ -11,7 +11,7 @@ const LoginValidation = (req, res, next) => {
     const { error } = loginSchema.validate(req.body);
 
     if (error) {
-      return next(new InvalidBody(error));
+      return next(new InvalidBody(error.message));
     }
 
     next();

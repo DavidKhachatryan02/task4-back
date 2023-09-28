@@ -11,7 +11,7 @@ const RefreshValidation = (req, res, next) => {
     const { error } = refreshSchema.validate(req.body);
 
     if (error) {
-      return next(new InvalidBody(error));
+      return next(new InvalidBody(error.message));
     }
 
     next();

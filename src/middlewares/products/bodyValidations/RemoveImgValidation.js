@@ -11,7 +11,7 @@ const RemoveImgValidation = (req, res, next) => {
     const { error } = removeImgSchema.validate(req.body);
 
     if (error) {
-      return next(new InvalidBody(error));
+      return next(new InvalidBody(error.message));
     }
 
     next();

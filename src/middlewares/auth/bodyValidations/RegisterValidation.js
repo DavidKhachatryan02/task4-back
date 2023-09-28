@@ -13,7 +13,7 @@ const RegisterValidation = (req, res, next) => {
     const { error } = registerSchema.validate(req.body);
 
     if (error) {
-      return next(new InvalidBody(error));
+      return next(new InvalidBody(error.message));
     }
 
     next();

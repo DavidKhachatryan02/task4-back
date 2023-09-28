@@ -10,7 +10,7 @@ const AddToCardValidation = (req, res, next) => {
     const { error } = addToCardSchema.validate(req.body);
 
     if (error) {
-      return next(new InvalidBody(error));
+      return next(new InvalidBody(error.message));
     }
 
     next();
